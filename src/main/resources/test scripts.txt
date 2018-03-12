@@ -1,0 +1,10 @@
+CREATE DATABASE `tst`;
+SHOW DATABASES;
+USE `tst`;
+
+CREATE TABLE `user` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`login_id` VARCHAR(50) NULL,
+	`password` VARCHAR(50) NULL,
+	PRIMARY KEY (`id`)
+);
