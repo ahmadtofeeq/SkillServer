@@ -1,6 +1,7 @@
 package com.harman.skillserver;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -18,20 +19,22 @@ import com.harman.utils.HarmanParser;
 @RestController
 @RequestMapping("/Skill")
 public class SkillServerController implements DbConstant {
-
+	
+	
 	@RequestMapping(value = "/UpdateSkill", method = RequestMethod.POST)
 	public @ResponseBody String requestCMD(@RequestBody String requestBody) throws IOException {
+		
 		System.out.println(requestBody);
 		ErrorType errorType = ErrorType.NO_ERROR;
 		JSONObject response = new JSONObject();
 		try {
-			// DBManager dbManager = DBManager.getInstance();
-			// Connection connection =
-			// dbManager.openConnection("device_info_store");
 			Map<String, String> mapList = new HarmanParser().parseData(requestBody);
-			for (Map.Entry<String, String> entry : mapList.entrySet()) {
-				System.out.println(entry.getKey() + "/" + entry.getValue() + "\n");
-			}
+			
+			// for (Map.Entry<String, String> entry : mapList.entrySet()) {
+			// System.out.println(entry.getKey() + "/" + entry.getValue() +
+			// "\n");
+			// }
+			
 			switch (errorType) {
 			case NO_ERROR:
 				response.put("Status", 1);

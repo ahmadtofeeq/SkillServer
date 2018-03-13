@@ -23,4 +23,7 @@ public interface DbConstant {
 	public String AppToneToggle = "AppToneToggle", AppMFBMode = "AppMFBMode";
 	public String AppHFPToggle = "AppHFPToggle", AppEQMode = "AppEQMode";
 
+	final public String userDetail = "UserDetail", ud_va_email = "va_email", ud_va_accessToken = "va_accessToken",
+			userID = "userID";
+
 }

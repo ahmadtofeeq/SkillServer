@@ -3,11 +3,10 @@ package com.harman.skillserver;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StartUpInit implements InitializingBean{
+public class StartUpInit{
 
 
 	@PostConstruct 
@@ -20,8 +19,5 @@ public class StartUpInit implements InitializingBean{
 		System.out.println("destroy");
 	}
 
-	public void afterPropertiesSet() throws Exception {
-		
-	}
   
 }

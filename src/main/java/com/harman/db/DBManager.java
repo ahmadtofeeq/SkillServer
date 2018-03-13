@@ -2,12 +2,16 @@ package com.harman.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Vector;
 
+import com.harman.Model.AppModel.AccountModel;
 import com.harman.Model.AppModel.DataModel;
 import com.harman.utils.ErrorType;
 
@@ -48,12 +52,55 @@ public class DBManager implements DBstructure, DbConstant {
 		}
 	}
 
+	public Object getListOfUserAccounts(String userID) {
+
+		String query = "select  from " + userDetail + " where " + userID + " = " + "'" + DBManager.userID + "'";
+		Vector<AccountModel> mAccList = new Vector<>();
+		ErrorType response = ErrorType.NO_ERROR;
+		Statement stmt = null;
+		try {
+			Connection connection = DBManager.getInstance().openConnection("hash");
+			stmt = connection.createStatement();
+			ResultSet resultSet = stmt.executeQuery(query);
+			resultSet.last();
+			if (resultSet.getRow() == 0) {
+				return mAccList;
+			} else {
+				do {
+					AccountModel accountModel = new AccountModel();
+					String va_email = resultSet.getString(ud_va_accessToken);
+					String va_accessToken = resultSet.getString(ud_va_accessToken);
+					accountModel.setAccessToken(va_accessToken);
+					accountModel.setEmail(va_email);
+					mAccList.add(accountModel);
+				} while (resultSet.next());
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			response = ErrorType.ERROR_ACCESSING_DB;
+		} catch (Exception e) {
+			response = ErrorType.DB_CONNECTION_ERROR;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+			} catch (SQLException se) {
+				response = ErrorType.ERROR_CLOSING_DB;
+				System.out.println("SQLException while closing data");
+			}
+		}
+		if (mAccList.size() == 0)
+			return response;
+		else
+			return mAccList;
+	}
 
 	public ErrorType insertDeviceModel(DataModel mHarmanDeviceModel, Connection conn) {
 		return null;
 		/*
 		 * ErrorType response = ErrorType.NO_ERROR; Statement stmt = null; try {
-		 * stmt = conn.createStatement(); String query = "select * from " +
+		 * stmt = conn.createStatement(); String query = "select  from " +
 		 * harmanDevice + " where " + macAddress + " = " + "'" +
 		 * mHarmanDeviceModel.getMacAddress() + "'"; ResultSet ifExistsResponse
 		 * = stmt.executeQuery(query); ifExistsResponse.last(); if
