@@ -1,4 +1,4 @@
-package com.harman.skillserver;
+package com.harman.skillserver.rest;
 
 import java.io.IOException;
 import java.sql.Connection;

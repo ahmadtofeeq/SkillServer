@@ -1,4 +1,4 @@
-package com.harman.skillserver;
+package com.harman.skillserver.rest;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
