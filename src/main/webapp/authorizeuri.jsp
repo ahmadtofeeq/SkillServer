@@ -4,16 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login Page</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<a href="registration.jsp">Registration</a>|
+	<%
+		String name = request.getParameter("uname");
+		out.print("welcome " + name);
+	%>
+	</form>
 </body>
-
-<h3>Login Form</h3>
-<form action="loginprocess.jsp" method="post">
-	Email:<input type="text" name="email" /><br /> <br /> Password:<input
-		type="password" name="password" /><br /> <br /> <input
-		type="submit" value="login" />
-</form>
 </html>

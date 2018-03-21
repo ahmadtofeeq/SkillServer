@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page import="java.io.*,java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,6 +6,18 @@
 <title>Registration on HASH</title>
 </head>
 <body>
-	<h3>Welcome to Hash Registration</h3>
+	<center>
+		<h1>Page Redirection</h1>
+	</center>
+	<%
+		// New location to be redirected
+		String site = new String(
+				"https://layla.amazon.com/spa/skill/account-linking-status.html?vendorId=M2B5RLVJ186581");
+	%>
+
+<body>
+	<%="Welcome " + request.getParameter("email")%>  
+</body>  
 </body>
+
 </html>
