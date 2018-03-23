@@ -30,8 +30,13 @@
 	<br> Redirect URI :
 	http://localhost:8080/oauth2client/callback.jsp
 	<br> Scope : reademail,sendemail,readboard,personalinfo,calendar
-	<br>
-
+	<br> 
+	<% String success = request.getParameter("state");%>
+	<%=success%>
+	<%-- <c:out value="${success}"/>;
+	if(success!=null) {
+	<c:out value="${success}"/>;
+	} --%>
 	<a href="<%=url%>">Authorize!!</a>
 </body>
 </html>

@@ -15,8 +15,14 @@
 		<servlet-name>spring</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
-
+	<servlet>
+		<servlet-name>AlexaLinkingServLet</servlet-name>
+		 <url-pattern>/redirect</url-pattern>
+	</servlet>
+	<servlet>
+		<servlet-name>AlexaLinkingServLet</servlet-name>
+		 <servlet-class>com.alexa</servlet-class>
+	</servlet>
 
 	<welcome-file-list>
 		<welcome-file>login.jsp</welcome-file>
