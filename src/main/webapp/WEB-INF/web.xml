@@ -17,11 +17,11 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>AlexaLinkingServLet</servlet-name>
-		 <url-pattern>/redirect</url-pattern>
+		<url-pattern>/redirect</url-pattern>
 	</servlet>
 	<servlet>
 		<servlet-name>AlexaLinkingServLet</servlet-name>
-		 <servlet-class>com.alexa</servlet-class>
+		<servlet-class>com.alexa</servlet-class>
 	</servlet>
 
 	<welcome-file-list>

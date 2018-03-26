@@ -86,18 +86,8 @@ public class SkillServerController implements DbConstant {
 		ErrorType errorType = ErrorType.NO_ERROR;
 		JSONObject response = new JSONObject();
 		try {
-			String access_token = new AlexaManager().generateAlexaAccessToken();
-			switch (errorType) {
-			case NO_ERROR:
-				response.put("Status", 1);
-				break;
-
-			default:
-				response.put("Status", 0);
-				break;
-			}
-			response.put("access_token", access_token);
-			response.put("skill", "update Hash server");
+			String message = new AlexaManager().sendEventsToAlexaServer(requestBody);
+			response.put("response", message);
 		} catch (Exception e) {
 			response.put("Status", 0);
 			response.put("skill", "update Hash server");
