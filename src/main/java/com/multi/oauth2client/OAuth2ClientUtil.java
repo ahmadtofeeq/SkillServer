@@ -15,8 +15,6 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
-
 public class OAuth2ClientUtil {
 	private static ObjectMapper mapper;
 
@@ -153,9 +151,9 @@ public class OAuth2ClientUtil {
 						+ encodeURIComponent(client_secret);
 			}
 
-			return "Basic " + Base64.encode(base.getBytes("UTF-8"));
+			return "Basic ";// + Base64.encode(base.getBytes("UTF-8"));
 
-		} catch (UnsupportedEncodingException e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}

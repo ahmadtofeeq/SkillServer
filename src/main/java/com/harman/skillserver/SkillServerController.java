@@ -99,4 +99,44 @@ public class SkillServerController implements DbConstant {
 		System.out.println(errorType.name());
 		return response.toString();
 	}
+
+	@RequestMapping(value = "/updateUserCredentials", method = RequestMethod.POST)
+	public @ResponseBody String updateUserCredentials(@RequestBody String requestBody) throws IOException {
+		System.out.println(requestBody);
+		ErrorType errorType = ErrorType.NO_ERROR;
+		JSONObject response = new JSONObject();
+		try {
+			String message = new AlexaManager().sendEventsToAlexaServer(requestBody);
+			response.put("response", message);
+		} catch (Exception e) {
+			response.put("Status", 0);
+			response.put("skill", "update Hash server");
+			System.out.println("fail to parse");
+		} finally {
+			DBManager mariaModel = DBManager.getInstance();
+			mariaModel.closeConnection();
+		}
+		System.out.println(errorType.name());
+		return response.toString();
+	}
+
+	@RequestMapping(value = "/externalNotification", method = RequestMethod.POST)
+	public @ResponseBody String externalNotification(@RequestBody String requestBody) throws IOException {
+		
+		JSONObject response = new JSONObject();
+		try {
+			JSONObject jsonObject = new JSONObject(requestBody);
+			System.out.println(jsonObject.toString());
+			String message = "notification is received.";
+			response.put("response", message);
+			response.put("code",1);
+		} catch (Exception e) {
+			response.put("code", 0);
+			response.put("response", "failed to inform HASH");
+			System.out.println("fail to parse");
+		}
+
+		return response.toString();
+	}
+
 }

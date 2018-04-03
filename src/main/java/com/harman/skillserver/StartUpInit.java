@@ -18,6 +18,5 @@ public class StartUpInit{
 	public void deInitServer() {
 		System.out.println("destroy");
 	}
-
   
 }
