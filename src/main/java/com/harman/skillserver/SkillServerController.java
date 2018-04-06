@@ -1,8 +1,22 @@
 package com.harman.skillserver;
 
 import java.io.IOException;
+import java.net.ProtocolException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alexa.AlexaManager;
+import com.alexa.AlexaParser;
 import com.harman.db.DBManager;
 import com.harman.db.DbConstant;
 import com.harman.utils.ErrorType;
@@ -78,6 +93,54 @@ public class SkillServerController implements DbConstant {
 		}
 		System.out.println(errorType.name());
 		return response.toString();
+	}
+	
+	
+	@RequestMapping(value = "/setReminder", method = RequestMethod.POST)
+	public @ResponseBody String setReminder(@RequestBody String requestBody) throws IOException {
+		System.out.println(requestBody);
+		JSONObject jsResponse = new JSONObject();
+		DefaultHttpClient httpClient = null;
+		try {
+			JSONObject gHomeJson = new JSONObject(requestBody);
+			String url = System.getenv("REMINDER_URL");
+			System.out.println(url);
+			//"https://6fe7105e.ngrok.io/alexa-reminders";
+			HttpPost post = new HttpPost(url);
+			HttpParams params = new BasicHttpParams();
+
+			post.addHeader("Content-Type", "application/x-www-form-urlencoded");
+			post.setParams(params);
+			List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+			nvps.add(new BasicNameValuePair("reminder", "Steve is inform you that he will "+gHomeJson.getString("text_msg")));
+			post.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
+			httpClient = new DefaultHttpClient();
+			HttpResponse response = httpClient.execute(post);
+			org.apache.http.StatusLine status = response.getStatusLine();
+
+			if (status.getStatusCode() == 200) {
+				System.out.println("Response is 200");
+				jsResponse.put("status code", "200");
+				jsResponse.put("message", "Jane has been informed.");
+			} else {
+				jsResponse.put("status code", status.getStatusCode());
+				jsResponse.put("message", "Jane has not been informed");
+			}
+		} catch (ProtocolException e) {
+			System.out.println("ProtocolException");
+		} catch (IOException e) {
+			System.out.println("IOException");
+		} catch (Exception e) {
+			System.out.println("Exception - " + e.getMessage());
+		} finally {
+			try {
+				if (httpClient != null)
+					httpClient.close();
+			} catch (Exception e) {
+
+			}
+		}
+		return jsResponse.toString();
 	}
 
 	@RequestMapping(value = "/ShoppingList", method = RequestMethod.POST)
